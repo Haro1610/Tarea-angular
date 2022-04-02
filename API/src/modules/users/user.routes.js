@@ -50,7 +50,7 @@ router.get('/:id', controller.getById);
  *         description: user password
  *         type: string
  */
- router.put("/:email/:password", controller.login);
+ router.put("/login", controller.login);
 
 
 /**
@@ -79,7 +79,7 @@ router.get('/:id', controller.getById);
  *         type: string
  *          
  */
- router.post("/", controller.createUser);
+ router.post("/singin", controller.createUser);
 
 router.delete('/:id',controller.delete);
 router.patch('/:id',controller.patch);
