@@ -1,0 +1,30 @@
+user.save()
+            .then((result => {
+                res.post(result);
+            })
+            )
+            .catch((err) => console.log(err))
+
+
+622baa5b104b52dca8c5b2ea
+
+ *       - in: body
+ *         name: role
+ *         description: user role
+ *         type: object
+
+const user = new User();
+        user.getById({ "email": req.params.email }).then((result) => {
+          if (
+            result.password === req.params.password &&
+            req.params.connected != true
+          ) {
+            const connected = true;
+            connected.push(req.body.connected);
+            result.url ="http://127.0.01:3000/users/" + result._id;
+    
+            user.findOneAndUpdate({ _id: result._id }, { connected: connected });
+          } else {
+            res.sendStatus(404);
+          }
+        });
