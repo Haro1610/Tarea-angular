@@ -10,5 +10,5 @@
  }
  Headers /paramentro de autenticacion  -Auth = Bearer 1231123123123 portador el token mecanismo de autenticiacion de las apliacaciones
  - Content-Type
- - .....
+ - ........
  */
