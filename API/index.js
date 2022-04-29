@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const socketIo = require('socket.io');
+const cors = require('cors');
+const multer = require('multer');
 //const MongoClient = require('mongodb').MongoClient; importar monogodb
 //const {MongoClient} = require('mongodb'); //importar mongodb
 
@@ -14,6 +16,37 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 const apiRoutes = require('./src/routes');
 
+app.use('/assets', express.static(path.join(__dirname,'public')));
+
+const multerOptions = {
+    destination: (req,file,cb) =>{
+        cb(null, 'public/images');
+    },
+    filename:(req,file,cb) => {
+        const extension = file.originalname.split('.').pop();
+        cb(null, `loremipsum-${new Date().getTime}.${extension}`);
+    }
+}
+
+const extensiones = ['png','jpg','jepg','bmp','gif'];
+
+const fileFilter = (req,file,cb)=>{
+    const extension = file.originalname.split('.').pop().toLowerCase();
+    //const flag = extensiones.includes(extension);
+    const flag = file.mimetype.startsWith('image/');
+    cb(null,flag);
+}
+
+const multerStorage = multer.diskStorage(multerOptions);
+
+const upload = multer({storage: multerStorage,fileFilter:fileFilter});
+
+app.post('/file',upload.single('archivo'),(req,res)=>{
+    console.log('Arhivo: ',req.file);
+    res.send('aqui va la subida del archivo');
+})
+
+app.use(cors());
 
 const port = process.env.PORT || 3000;
 
